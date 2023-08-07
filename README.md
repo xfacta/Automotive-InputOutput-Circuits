@@ -5,9 +5,14 @@ The Power Supply schematic includes a 5vdc Sensor regulator. This reduces the lo
 the Arduino on-board linear regulator, and also allows more effective input protection
 by diverting high voltages to the 5vdc Sensor reg via schotttky diodes, where the over-voltage can be absorbed
 by a 5.6v 5watt zener, filter capacitors and schottky diode.
-The LM2940CT-5 regulator is suitable for automotive applications and handles reverse voltages and load dumps.
+The LM2940CT-5 regulator is suitable for automotive applications and handles reverse voltages and load dumps,
+even though those events are unlikely to happen to that regulator considering where it is on the circuit.
 
-The Arduinos are powered via their input barrels from a "Arduino" 2.5A adjustable switching supply set to 10vdc.
+The Arduinos are powered via their input barrels (soldered wires) from a "Arduino" 2.5A adjustable switching
+supply set to 10vdc. This means the protection diode and input caps are retained for extra protection of
+each Arduino, even though it also means the onboard linear regulator (heat generator) is also used.
+Otherwise the Vin pin could be used but reverse voltage protection diode wouldnt be inline. 
+Other options would require physical modification of the board.
 
 https://www.jaycar.com.au/arduino-compatible-dc-voltage-regulator-module/p/XC4514
 
@@ -23,11 +28,12 @@ General supply voltage protection includes:
 There is a "Power Good" circuit for the Speedometer Arduino to ensure it doesnt try to write to EEPROM
 during bad power situations.
 
-The Tachometer Arduino outputs high RPM as PWM to the Fuel/Temp Arduino, where a NeoPixel strip is used
+The Tachometer Arduino outputs high RPM as PWM to the Fuel/Temp/Volts Arduino, where a NeoPixel strip is used
 as a shift light. The last LED on the strip is used to indicate various statuses.
 
 Arduino analog and digital inputs are protected by schottky diodes as appropriate. Where inverters are used
-they have inbuilt protection diodes and only an external resistor is used.
+they have inbuilt protection diodes and only an external resistor is used. Most of the digital inputs
+are debounced in hardware via the schmitt trigger inverters and basic noise filtering.
 
 An Op Amp is used to get a more usable voltage range from the fuel level sensor, since the standard Datsun fuel sender
 only has an 8ohm to 80ohm range.
@@ -36,9 +42,8 @@ There is facilty to use a DS18B20 one-wire temperature sensor, or there's calibr
 sketches for Nissan SR20 or standard NTC resistor temperature sensors.
 
 **Light inputs:**
-- Parkers and Low beam are active high.
-- High beam is active low
-- Inverters clean up the signal and make everything active high
+- Parkers and Low beam are active high
+- High beam is active low, inverted by a schmitt trigger to active high
 
 **Sounds**
 Each main Arduino (Fuel/Temp / Tacho / Speedo) outputs a warning signal and/or Oil Pressure warning signal. These are actioned
