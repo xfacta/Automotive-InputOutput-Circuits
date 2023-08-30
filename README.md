@@ -31,9 +31,11 @@ during bad power situations.
 The Tachometer Arduino outputs high RPM as PWM to the Fuel/Temp/Volts Arduino, where a NeoPixel strip is used
 as a shift light. The last LED on the strip is used to indicate various statuses.
 
-Arduino analog and digital inputs are protected by schottky diodes as appropriate. Where inverters are used
+Arduino analog and digital inputs are protected by schottky diodes or transorb/zeners as appropriate. ~~Where inverters are used
 they have inbuilt protection diodes and only an external resistor is used. Most of the digital inputs
-are debounced in hardware via the schmitt trigger inverters and basic noise filtering.
+are debounced in hardware via the schmitt trigger inverters and basic noise filtering.~~
+Design changed to use opto couplers for digital inputs for superior protection of the Arduinos and simplicity. The optos also provide some natural schmitt trigger/hysterisis effect to aid in switch debouncing.
+All digital inputs are "active low" at the Arduino for consistency via iverting at the opto coupler if necessary - including the light inputs.
 
 An Op Amp is used to get a more usable voltage range from the fuel level sensor, since the standard Datsun fuel sender
 only has an 8ohm to 80ohm range.
@@ -43,7 +45,7 @@ sketches for Nissan SR20 or standard NTC resistor temperature sensors.
 
 **Light inputs:**
 - Parkers and Low beam are active high
-- High beam is active low, inverted by a schmitt trigger to active high
+- High beam is active low, inverted by a ~~schmitt trigger~~ opto coupler placement to active high
 
 **Sounds**
 Each main Arduino (Fuel/Temp / Tacho / Speedo) outputs a warning signal and/or Oil Pressure warning signal. These are actioned
