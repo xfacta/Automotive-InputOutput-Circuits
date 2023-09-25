@@ -9,7 +9,7 @@ The LM2940CT-5 regulator is suitable for automotive applications and handles rev
 even though those events are unlikely to happen to that regulator considering where it is on the circuit.
 
 The Arduinos are powered via their input barrels (soldered wires) from a "Arduino" 2.5A adjustable switching
-supply set to 10vdc. This means the protection diode and input caps are retained for extra protection of
+supply set to 10vdc. This means the protection diode and input caps are retained for isolation of
 each Arduino, even though it also means the onboard linear regulator (heat generator) is also used.
 Otherwise the Vin pin could be used but reverse voltage protection diode wouldnt be inline. 
 Other options would require physical modification of the board.
@@ -25,17 +25,14 @@ General supply voltage protection includes:
 - Low ESR electrolytic caps
 - Some capacitors are specified as Tantalum for the their Low ESR performance
 
-There is a "Power Good" circuit for the Speedometer Arduino to ensure it doesnt try to write to EEPROM
-during bad power situations.
-
-The Tachometer Arduino outputs high RPM as PWM to the Fuel/Temp/Volts Arduino, where a NeoPixel strip is used
+The Tachometer Arduino outputs high RPM serial data to the Fuel/Temp/Volts Arduino, where a NeoPixel strip is used
 as a shift light. The last LED on the strip is used to indicate various statuses.
 
 Arduino analog and digital inputs are protected by schottky diodes or transorb/zeners as appropriate. ~~Where inverters are used
 they have inbuilt protection diodes and only an external resistor is used. Most of the digital inputs
 are debounced in hardware via the schmitt trigger inverters and basic noise filtering.~~
 Design changed to use opto couplers for digital inputs for superior protection of the Arduinos and simplicity. The optos also provide some natural schmitt trigger/hysterisis effect to aid in switch debouncing.
-All digital inputs are "active low" at the Arduino for consistency via iverting at the opto coupler if necessary - including the light inputs.
+The opto coupler circuits are arranged to provide active high inputs to the Arduinos.
 
 An Op Amp is used to get a more usable voltage range from the fuel level sensor, since the standard Datsun fuel sender
 only has an 8ohm to 80ohm range.
@@ -62,7 +59,7 @@ Pin definitions for digital inputs
 - Pbrake_Input_Pin = 4;           // Park brake input pin
 - VSS_Input_Pin = 5;              // Speed frequency input pin
 - RPM_Input_Pin = 6;  // RPM frequency input pin
-- RPM_PWM_In_Pin = 6;             // Input PWM signal representing RPM
+- ~~RPM_PWM_In_Pin = 6;             // Input PWM signal representing RPM~~
 - Button_Pin = 7;  // Button momentary input
 
 Pin definitions for analog inputs
@@ -72,7 +69,7 @@ Pin definitions for analog inputs
 - Alternator_Pin = A3;            // Alternator indicator analog input pin
 
 Pin definitions for outputs
-- RPM_PWM_Out_Pin = 10;            // Output of RPM as a PWM signal for shift light
+- ~~RPM_PWM_Out_Pin = 10;            // Output of RPM as a PWM signal for shift light~~
 - LED_Pin = 10;                   // NeoPixel LED pin
 - Warning_Pin = 11;               // Link to external Leonardo for general warning sounds
 - OP_Warning_Pin = 12;            // Link to external Leonardo for oil pressure warning sound
@@ -89,3 +86,6 @@ Length        5.0 Volt  3.3 Volt
 100cm (3'4")    3K3      2K2
 200cm (6'8")    2K2      1K0
 ```
+
+Serial2 pins used on the Mega2560s for RPM shiftlight comms
+pins 17(RX), 16(TX)
