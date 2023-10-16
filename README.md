@@ -28,11 +28,9 @@ General supply voltage protection includes:
 The Tachometer Arduino outputs high RPM serial data to the Fuel/Temp/Volts Arduino, where a NeoPixel strip is used
 as a shift light. The last LED on the strip is used to indicate various statuses.
 
-Arduino analog and digital inputs are protected by schottky diodes or transorb/zeners as appropriate. ~~Where inverters are used
+Arduino analog and digital inputs are protected by schottky diodes or transorb/zeners as appropriate. Where inverters or buffers are used
 they have inbuilt protection diodes and only an external resistor is used. Most of the digital inputs
-are debounced in hardware via the schmitt trigger inverters and basic noise filtering.~~
-Design changed to use opto couplers for digital inputs for superior protection of the Arduinos and simplicity. The optos also provide some natural schmitt trigger/hysterisis effect to aid in switch debouncing.
-The opto coupler circuits are arranged to provide active high inputs to the Arduinos.
+are debounced in hardware via the schmitt trigger inverters and buffers, with basic noise filtering.
 
 An Op Amp is used to get a more usable voltage range from the fuel level sensor, since the standard Datsun fuel sender
 only has an 8ohm to 80ohm range.
