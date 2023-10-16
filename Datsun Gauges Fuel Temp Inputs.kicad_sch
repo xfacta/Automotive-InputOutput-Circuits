@@ -2033,7 +2033,7 @@
     (property "Reference" "R9" (at 113.03 147.32 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "3k3" (at 113.03 149.86 0)
+    (property "Value" "2k2" (at 113.03 149.86 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "" (at 108.712 148.59 90)

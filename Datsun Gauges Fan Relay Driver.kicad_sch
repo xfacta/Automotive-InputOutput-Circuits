@@ -799,7 +799,7 @@
     (stroke (width 0) (type default))
     (uuid c70ef99e-6cc8-4491-be1e-277d74c3a721)
   )
-  (wire (pts (xy 176.53 81.28) (xy 193.04 81.28))
+  (wire (pts (xy 175.26 81.28) (xy 193.04 81.28))
     (stroke (width 0) (type default))
     (uuid ce5bdfe0-6e69-4a9c-a710-a0be7d19df87)
   )
@@ -812,7 +812,7 @@
     (uuid dfcef8fb-8033-4be8-9d18-e7d5981ee7d9)
   )
 
-  (text "10k pulldown not needed\nwhen using builtin LED pin\nsince it has a resistor\nand LED to ground"
+  (text "10k pulldown may not needed\nwhen using builtin LED pin\nsince it has a resistor\nand LED to ground on SOME arduinos"
     (at 91.44 107.95 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 0763192f-84a4-4c92-9a90-fff2186bed35)
